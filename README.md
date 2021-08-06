@@ -13,4 +13,4 @@ In the project directory, you can run:
 
 Launches the test runner in the interactive watch mode.\
 
-
+**Note: Some issues may be log in the console section due to the using different ip address. Then the mongoDB may refuses the connection!**
