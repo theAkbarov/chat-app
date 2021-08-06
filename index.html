@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.socket.io/3.1.3/socket.io.min.js"
+      integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      var socket = io();
+    </script>
+  </head>
+
+  <body class="bg-warning">
+    <ul class="list-group position-absolute top-0">
+      <li class="list-group-item active" aria-current="true">Used tools</li>
+      <li class="list-group-item">Nodejs</li>
+      <li class="list-group-item">MongoDb</li>
+      <li class="list-group-item">Jasmine</li>
+      <li class="list-group-item">Express</li>
+      <li class="list-group-item">Socket.io</li>
+      <li class="list-group-item">Bootstrap 5</li>
+    </ul>
+    <div class="container">
+      <div class="card mt-5 w-50 mx-auto">
+        <div class="card-header">
+          <div class="card-title">
+            <h1>Chatting app</h1>
+          </div>
+        </div>
+        <div class="card-body">
+          <form id="form">
+            <div class="form-group">
+              <label for="exampleFormControlInput1">Your name</label>
+              <input
+                type="text"
+                class="form-control name"
+                id="exampleFormControlInput1"
+                placeholder="Your name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Message</label>
+              <textarea
+                class="form-control pws"
+                id="exampleFormControlTextarea1"
+                rows="3"
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-success w-100 my-3 float-end">
+              Send
+            </button>
+          </form>
+        </div>
+        <div class="card-footer">
+          <ul class="list-group group"></ul>
+        </div>
+      </div>
+    </div>
+    <script>
+      $(() => {
+        get_messages();
+
+        $("#form").submit((e) => {
+          e.preventDefault();
+          let messages = {
+            name: $(".name").val(),
+            password: $(".pws").val(),
+          };
+          if (messages.name.length > 0) {
+            // location.reload(true);
+            post_messages(messages);
+          }
+        });
+      });
+      // socket.on('message', add_messages)
+      const add_messages = (message) => {
+        $(".group").prepend(`<li class='list-group-item'>
+                <h4>${message.name}</h4>
+                <hp>${message.password}</h4>
+                </li>`);
+      };
+      const post_messages = (messages) => {
+        $.post("http://localhost:3000/message", messages);
+      };
+
+      const get_messages = () => {
+        $.get("http://localhost:3000/messages", (data) => {
+          console.log("Bu data", data);
+          data.forEach(add_messages);
+        });
+      };
+    </script>
+  </body>
+</html>
