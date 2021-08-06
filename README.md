@@ -1,9 +1,9 @@
-# chat-app
+# Chat-app
 Real time chat application.
 
  ## To run the project please install the required libraries and tools.
  
-### npm i 
+### `npm install` 
  
 ## Available Scripts
 
